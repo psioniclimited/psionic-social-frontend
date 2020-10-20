@@ -5,6 +5,7 @@ import {
   LOADING_UI,
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
+  LOADING_USER,
 } from "../types";
 
 const initialState = {
@@ -27,9 +28,15 @@ export default function (state = initialState, action) {
     case SET_USER:
       return {
         authenticated: true,
+        loading: false,
         ...action.payload,
       };
-    default: 
+    case LOADING_USER:
+      return {
+        ...state,
+        loading: true,
+      };
+    default:
       return state;
   }
 }
