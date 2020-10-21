@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-import EditDetails from './EditDetails';
+import EditDetails from "./EditDetails";
+import MyButton from '../util/MyButton';
 
 import Button from "@material-ui/core/Button";
-import { IconButton, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import MuiLink from "@material-ui/core/Link";
-import ToolTip from "@material-ui/core/Tooltip";
 
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
@@ -81,7 +81,7 @@ class Profile extends Component {
   };
   handleLogout = () => {
     this.props.logoutUser();
-  }
+  };
   render() {
     const {
       classes,
@@ -103,11 +103,13 @@ class Profile extends Component {
                 hidden="hidden"
                 onChange={this.handleImageChange}
               />
-              <ToolTip title="Edit profile picture" placement="top">
-                <IconButton onClick={this.handleEditPicture} className="button">
-                  <EditIcon color="primary" />
-                </IconButton>
-              </ToolTip>
+              <MyButton
+                tip="Edit profile picture"
+                onClick={this.handleEditPicture}
+                btnClassName="button"
+              >
+                <EditIcon color="primary" />
+              </MyButton>
             </div>
             <hr />
             <div className="profile-detail">
@@ -140,11 +142,9 @@ class Profile extends Component {
               <CalendarToday color="primary" />{" "}
               <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
             </div>
-            <ToolTip title="Logout" placement="top">
-              <IconButton onClick={this.handleLogout}>
-                <KeyboardReturn color="primary" />
-              </IconButton>
-            </ToolTip>
+            <MyButton tip="Logout" onClick={this.handleLogout}>
+              <KeyboardReturn color="primary" />
+            </MyButton>
             <EditDetails />
           </div>
         </Paper>
@@ -194,4 +194,7 @@ Profile.propType = {
   classes: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps, mapActionsToProp)(withStyles(styles)(Profile));
+export default connect(
+  mapStateToProps,
+  mapActionsToProp
+)(withStyles(styles)(Profile));

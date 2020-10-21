@@ -4,9 +4,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import { connect } from "react-redux";
 import { editUserDetails } from "../redux/actions/userActions";
+import MyButton from "../util/MyButton";
 import {
-  Tooltip,
-  IconButton,
   Button,
   TextField,
   Dialog,
@@ -19,8 +18,8 @@ import EditIcon from "@material-ui/icons/Edit";
 const styles = (theme) => ({
   ...theme.global,
   button: {
-    float: 'right'
-  }
+    float: "right",
+  },
 });
 
 class EditDetails extends Component {
@@ -48,7 +47,7 @@ class EditDetails extends Component {
     const { credentials } = this.props;
     this.mapUserDetailsToState(credentials);
   }
-  
+
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -60,19 +59,21 @@ class EditDetails extends Component {
       bio: this.state.bio,
       website: this.state.website,
       location: this.state.location,
-    }
+    };
     this.props.editUserDetails(userDetails);
     this.handleClose();
-  }
+  };
   render() {
     const { classes } = this.props;
     return (
       <Fragment>
-        <Tooltip title="Edit details" placement="top">
-          <IconButton onClick={this.handleOpen} className={classes.button}>
-            <EditIcon color="primary" />
-          </IconButton>
-        </Tooltip>
+        <MyButton
+          tip="Edit details"
+          onClick={this.handleOpen}
+          btnClassName={classes.button}
+        >
+          <EditIcon color="primary" />
+        </MyButton>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
