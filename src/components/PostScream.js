@@ -25,32 +25,31 @@ const styles = (theme) => ({
     marginTop: 10
   },
   progressSpinner: {
-    position: "absolute",
+    position: 'absolute'
   },
   closeButton: {
-    position: "absolute",
-    left: "90%",
-    top: "10%",
-  },
+    position: 'absolute',
+    left: '91%',
+    top: '6%'
+  }
 });
+
 class PostScream extends Component {
   state = {
     open: false,
-    body: "",
-    errors: {},
+    body: '',
+    errors: {}
   };
-componentWillReceiveProps(nextProps) {
-  if(nextProps.UI.errors){
-    this.setState({
-      errors: nextProps.UI.errors
-    });
-  };
-  if(!nextProps.UI.errors && !nextProps.UI.loading){
-    this.setState({body: ''});
-    this.handleClose();
-  } 
-}
-
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({
+        errors: nextProps.UI.errors
+      });
+    }
+    if (!nextProps.UI.errors && !nextProps.UI.loading) {
+      this.setState({ body: '', open: false, errors: {} });
+    }
+  }
   handleOpen = () => {
     this.setState({ open: true });
   };
@@ -68,20 +67,24 @@ componentWillReceiveProps(nextProps) {
     const { errors } = this.state;
     const {
       classes,
-      UI: { loading },
+      UI: { loading }
     } = this.props;
     return (
       <Fragment>
-        <MyButton tip="Post a scream" onClick={this.handleOpen} tipClassName={classes.closeButton}>
-          <AddIcon color="primary" />
+        <MyButton onClick={this.handleOpen} tip="Post a Scream!">
+          <AddIcon />
         </MyButton>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          fullwidth
+          fullWidth
           maxWidth="sm"
         >
-          <MyButton tip="Close" onClick={this.handleClose}>
+          <MyButton
+            tip="Close"
+            onClick={this.handleClose}
+            tipClassName={classes.closeButton}
+          >
             <CloseIcon />
           </MyButton>
           <DialogTitle>Post a new scream</DialogTitle>
@@ -90,10 +93,10 @@ componentWillReceiveProps(nextProps) {
               <TextField
                 name="body"
                 type="text"
-                label="SCREAM"
+                label="SCREAM!!"
                 multiline
                 rows="3"
-                placeholder="post a scream"
+                placeholder="Scream at your fellow apes"
                 error={errors.body ? true : false}
                 helperText={errors.body}
                 className={classes.textField}
@@ -109,7 +112,10 @@ componentWillReceiveProps(nextProps) {
               >
                 Submit
                 {loading && (
-                  <CircularProgress size={30} className={classes.prop} />
+                  <CircularProgress
+                    size={30}
+                    className={classes.progressSpinner}
+                  />
                 )}
               </Button>
             </form>
@@ -127,9 +133,10 @@ PostScream.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  UI: state.UI,
+  UI: state.UI
 });
 
-export default connect(mapStateToProps, { postScream })(
-  withStyles(styles)(PostScream)
-);
+export default connect(
+  mapStateToProps,
+  { postScream }
+)(withStyles(styles)(PostScream));
